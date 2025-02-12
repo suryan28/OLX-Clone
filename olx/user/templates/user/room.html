@@ -1,0 +1,177 @@
+{% extends "olx.html" %}
+
+{% block content %}
+<style>
+  .chat-container {
+  width: 600px;
+ 
+}
+
+.chat-item-container.chat-item-right {
+    background-color: rgb(210, 223, 249);
+}
+.chat-item-container.chat-item-right .chat-item {
+  margin-left: auto;
+}
+.chat-item {
+  
+  max-width: 250px;
+  text-align: left;
+}
+</style>
+<div class="container">
+    <div class="col-md-5">
+    
+    <textarea id="pre_chat" cols="50" rows="20" style="display: none;">{% for chat in chats %}
+    {{ chat.sender.first_name}}- {{ chat.message }}
+      {% endfor %}</textarea><br>
+    <textarea id="chat-log" cols="50" rows="20" >{% for chat in chats %}
+      {{ chat.sender.first_name}}- {{ chat.message }}
+        {% endfor %}</textarea><br>
+    <input id="chat-message-input" type="text" size="50"><br>
+    <input id="chat-message-submit" type="button" value="Send">
+    <!-- <input id="pre_message" type="button" onclick="reload()" value="Refresh"><br> -->
+
+</div>
+    {{ room_name|json_script:"room-name" }}
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+
+            document.querySelector('#chat-log').value += (data.sender_name +'-' + data.message +'\n');
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            // window.location.reload();
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            
+            // const buyer_id='{{user}}'
+            const product='{{products.id}}'
+            // const seller_id='{{products.owner}}'
+            const sender='{{user.id}}'
+            // const receiver='{{products.owner.id}}'
+            const buyer='{{buyer.id}}'
+            const seller='{{seller.id}}'
+            const sender_name='{{user.first_name}}'
+
+
+          
+            let receiver;
+            if (buyer==sender){
+              receiver=seller;
+             }
+             else{
+              receiver=buyer;
+             }
+             console.log(receiver)
+            
+
+
+
+            // console.log(sender)
+            // console.log(receiver)
+
+            // console.log(buyer_id)
+            // console.log(seller_id)
+
+
+
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'sender': sender,
+                'receiver': receiver,
+                'product': product,
+                'buyer': buyer,
+                'seller':seller,
+                'sender_name': sender_name,
+            }));
+            messageInputDom.value = '';
+        };
+
+
+        const textarea = document.getElementById("chat-log");
+        textarea.scrollTop = textarea.scrollHeight;
+
+    </script>
+  
+  <div class="col-md-7 mb-5 ">
+    <div class="card" style="background-color: rgb(255, 255, 255);">
+      <div class="card-body">
+        <!-- <div class="d-flex flex-column align-items-center text-center" style="background-color: rgb(255, 255, 255);"> -->
+          <img src='/media/{{products.image}}' alt="image" class="rounded-circle" width="100%">
+         
+        <!-- </div> -->
+      </div>
+    </div>
+    <br>
+  <div class="row">
+    <div class="card " style="background-color: rgb(255, 255, 255);">
+      <div class="card-body" style="padding: 10px; ">
+          <div class="row">
+            <div class="col-md-9">
+              <h3>Details</h3>
+            </div>
+            <div class="col-md-3">
+              <h2><i style="font-size:24px" class="fa">&#xf156;</i>{{products.product_price}}</h2>
+            </div>
+          </div>
+        <hr>
+        <h4>{{products.product_title}}</h4>
+        <hr>
+        <h5>Description</h5>
+        <hr>
+        
+        <p>{{products.product_description}}</p>
+       
+      </div>
+    </div>
+  </div>
+    <!-- <div class="about-product text-left mt-2"><img src='/media/{{products.image}}' style="width: 100%; height:250px">
+      <div>
+          <h3><i style="font-size:24px" class="fa"></i>{{products.product_price}}</h3>
+          <h6 class="mt-0 text-black-50">{{products.product_title}}</h6>
+          
+      </div>
+  </div> -->
+  </div>
+  
+  <!-- <div class="chat-container">
+    {% for chat in chats %}
+     {{ chat.message }} -->
+    <!-- {% if chat.sender == user.first_name %} -->
+    <!-- <div class="chat-divider">Chat:</div>
+    <div class="chat-item-container chat-item-right">
+      <div class="chat-item">{{ chat.message }}</div>
+    </div> -->
+    <!-- {% else %} -->
+    <!-- <div class="chat-divider">Chat:</div>
+    <div class="chat-item-container chat-item-left">
+      <div class="chat-item">{{ chat.message }}</div>
+    </div> -->
+    <!-- {% endif %}
+    {% endfor %} -->
+  <!-- </div>  -->
+</div>
+{% endblock %}

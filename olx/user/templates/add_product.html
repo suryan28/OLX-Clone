@@ -1,0 +1,48 @@
+{% extends "olx.html" %}
+
+{% block content %}
+
+<!-- <form method="post">
+{% csrf_token %}
+ 
+  
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form> -->
+<div class="container">
+    <form class="text-center border border-light p-5" method="POST" action=""enctype="multipart/form-data">
+        {% csrf_token %}  
+        
+        
+            <!-- <input type="text" id="user_id" class="form-control mb-4"name="user" value=""><br> -->
+            
+            <input type="text" id="product_title_id" class="form-control mb-4"name="product_title" placeholder="Product title"><br>
+            <input type="text" id="price_id" class="form-control mb-4"name="product_price" placeholder="Product Price"><br>
+            <textarea class="form-control mb-4" name="product_description" id="product_description_id" rows="3"placeholder="Product Description"></textarea><br>
+            <input type="text" id="product_location_id" class="form-control mb-4"name="product_location" placeholder="location"><br>
+
+            <select class="form-control mb-4"name="category" id="id_category">
+                <option selected disabled>Select Category</option>
+               
+                {% for choice in form.category.field.queryset %}
+               
+                <option value=" {{ choice.pk }}"> {{ choice.sub_categories }}</option>
+                {% endfor %}
+                
+               
+               
+            
+                </select><br>
+            <input type="file" id="image_id" class="form-control mb-4"name="image"><br>
+        
+     
+           
+            <button class="btn btn-info btn-block" type="submit">Save</button>
+
+            
+        
+        </form>
+       
+</div>
+
+{% endblock %}

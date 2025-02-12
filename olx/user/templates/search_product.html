@@ -1,0 +1,140 @@
+{% extends "olx.html" %}
+<!-- <ul>
+{% if user.is_authenticated %}
+<li>hello,{{user.first_name}}</li>
+<li> <a href="logout"> logout</a></li>
+{% else %}
+<li><a href="login">please login</a></li>
+
+{% endif %}
+</ul> -->
+{% load static %}
+{% block content %}
+<style>
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: rgb(255, 255, 255);
+  max-width: 300px;
+  margin: auto;
+  padding: auto;
+  /* text-align: center; */
+  font-family: arial;
+}
+</style>
+<div class="container">
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">All Categories <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+                 
+      
+      {% for cat in categorylist %}
+      
+      <li><a href="{% url 'user:product_by_category' cat.id %}" value="{{cat.id}}">{{cat.sub_categories}}</a></li>
+      {% endfor %}
+      
+      
+              
+
+      </ul>
+    </li>
+  </ol>
+</nav>
+</div>
+<div class="container-fluid">
+<div class="row">
+
+{% for product in productlist %}
+<!-- <div class="card" style="width:400px">
+  <img class="card-img-top" src='/media/{{product.image}}' alt="Card image" style="width:100%">
+  <div class="card-body">
+    <h4 class="card-title">{{product.product_title}}</h4>
+    <p class="card-text">{{product.product_description}}</p>
+    
+  </div>
+</div> -->
+<div class="col-md-2">
+<div class="mt-5">
+  <div class="card">
+      <div class="about-product text-left mt-2"><img src='/media/{{product.image}}' style="width: 100%; height:250px">
+        <div class="card-body" style="padding: 10px; margin: 10px; ">
+          <h3 class="card-title"><i style="font-size:24px" class="fa">&#xf156;</i>{{product.product_price}}</h3>
+              <!-- <h3><i style="font-size:24px" class="fa">&#xf156;</i>{{product.product_price}}</h3> -->
+              <h4 class="mt-0 text-black-50 card-text">{{product.product_title}}</h4>
+              <a href="{% url 'user:detail_view' product.id %}" class="btn btn-primary">View</a>
+            
+
+             
+
+          </div>
+      </div>
+      
+    </div>   
+</div>
+</div>
+
+
+
+
+
+
+{% endfor %}
+</div>
+</div>
+{% endblock %}
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Page 1-1</a></li>
+          <li><a href="#">Page 1-2</a></li>
+          <li><a href="#">Page 1-3</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Page 2</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      
+      {% if user.is_authenticated %}
+      <li></li>
+      <li class="dropdown"><a class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" href="#">hello,{{user.first_name}} <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="profile">Profile</a></li>
+          <li> <a href="settings"> Settings</a></li>
+          <li> <a href="logout"> logout</a></li>
+         
+         
+        </ul>
+      </li>
+      {% else %}
+      <li><a href="signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+  
+</div>
+
+</body>
+</html> -->

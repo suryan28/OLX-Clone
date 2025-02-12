@@ -1,0 +1,243 @@
+{% extends "olx.html" %}
+
+{% block content %}
+<!-- <!DOCTYPE html>
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+ -->
+ 
+
+
+<div  class="container border" >
+  
+  <div id="signup" style="display: block;">
+    <div class="title_container"><h2>Registration</h2></div> 
+  <form  class="was-validation" class="needs-validation"  novalidate>
+    
+    <div class="form-group">
+      <label for="uname">First Name:</label>
+      <input type="text" class="form-control" placeholder="Enter first name" name="first_name" maxlength="150" id="id_first_name" required>
+     
+      
+    </div>
+    <div class="form-group">
+        <label for="uname">Last Name:</label>
+        <input type="text" class="form-control" placeholder="Enter last name" name="last_name" maxlength="150" id="id_last_name" required>
+        
+        
+      </div>
+      <div class="form-group">
+        <label for="uname">Email Address:</label>
+        <input type="email" class="form-control" placeholder="Enter email id" name="email" maxlength="254" required="" id="id_email" required="required">
+        
+        
+      </div>
+      
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="id_password" placeholder="Enter password" name="password" required>
+     
+      
+    </div>
+    <div class="form-group">
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+    <input type="password" class="form-control" placeholder="Repeat Password" name="password1" id="id_password1" required>
+       
+        
+      </div>
+    
+    
+    <button type="button" class="btn btn-primary" onclick="ajax_send_otp()">Next</button>
+  </div> 
+
+  <script>  </script>
+    <!-- otp varification div -->
+    <div id="otp" class="container border" style="display: none;">
+
+        <div class="title_container"><h2>OTP varification</h2></div> 
+        
+        
+          
+          <div class="form-group">
+            <label for="uname">OTP:</label>
+            <input type="text" class="form-control" placeholder="Enter OTP" name="otp" maxlength="6" id="id_otp" required>
+            <button type="button"  class="btn btn-primary" onclick="verify_otp()">Verify</button>
+          </div>  
+ 
+    </div>
+   
+    <!-- <div id="submit_btn" class="container border" style="display: none;">
+      <button type="submit"  class="btn btn-primary" >submit</button>
+    </div> -->
+  </form>
+
+ 
+
+
+  <script>
+  
+
+  // $("#id_email").change(function () {
+  //             var email_text = $(this).val();
+  //             console.log(email_text)
+  //             $.ajax({
+  //               url: 'validate_email/',
+  //               data: {
+  //                 'email_text': email_text
+  //               },
+  //               dataType: 'json',
+  //               success: function (data) {
+  //                 if (data.is_taken) {
+                   
+  //                   alert("A user with this email already exist.");
+                    
+  //                 }
+  //               }
+  //             });
+        
+  //           });
+
+
+    // Disable form submissions if there are invalid fields
+  
+
+
+    // for ajax
+    // var otp_from_back="";
+    //  function ajax_send_otp(){
+    //     document.getElementById("signup").style.display='block';
+    //     email = document.getElementById("id_email");
+    //     $.post("/send_otp",
+    //       {
+    //           "email":email.value,
+    //           "csrfmiddlewaretoken":"{{csrf_token}}"
+    //       },
+    //       function(data, status){
+    //           if(status=="success"){
+    //               otp_from_back = data;
+    //               console.log(otp_from_back)
+    //               document.getElementById("otp").style.display='block';
+    //               }
+    //  }
+    //  );
+    //  }
+
+
+function getCookie(c_name){
+    if (document.cookie.length > 0){
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1){
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return unescape(document.cookie.substring(c_start,c_end));
+        }
+    }
+    return "";
+  }
+
+var otp_from_back="";
+function ajax_send_otp(){ 
+  u_email = document.getElementById('id_email').value
+  p1 = document.getElementById('id_password').value
+  p2 = document.getElementById('id_password1').value
+  fname = document.getElementById('id_first_name').value
+  lname = document.getElementById('id_last_name').value
+  console.log("function called")
+   
+    $.ajax({
+      url : '/send_otp',
+      type :'POST',
+      headers: { "X-CSRFToken": getCookie("csrftoken") },
+      dataType:'json',
+      data : {
+        'email' : u_email
+      },
+      success : function(data) {  
+      document.getElementById("signup").style.display='none';
+      otp_from_back = data;
+      console.log(otp_from_back)
+      document.getElementById("otp").style.display='block';
+                
+      // alert('Data: '+data);
+      },
+      error : function(request,error){
+      alert('invalid data');
+      }
+  });
+}
+
+    // otp verification function
+    function verify_otp(){
+      var user_otp=document.getElementById("id_otp").value;
+       
+      $.ajax({
+        url : '/verify_otp',
+        type :'POST',
+        headers: { "X-CSRFToken": getCookie("csrftoken") },
+        dataType:'json',
+        data : {
+          'email' : u_email,
+          'otp': user_otp
+        },
+        success : function(data) {  
+          if (data == true)
+            confirm_user();     
+          else
+            alert('invalid OTP');
+
+        // alert('Data: '+data);
+        },
+        error : function(request,error){
+        alert("Request: "+JSON.stringify(request));
+        }
+    });
+    
+    } 
+
+
+function confirm_user(){ 
+f_name = document.getElementById('id_first_name').value
+l_name = document.getElementById('id_last_name').value
+password = document.getElementById('id_password').value
+$.ajax({
+  url : '/confirm_user',
+  type :'POST',
+  headers: { "X-CSRFToken": getCookie("csrftoken") },
+  dataType:'json',
+  data : {
+      'fname' : f_name,
+      'lname' : l_name,
+      'email' : u_email,
+      'pwd' : password
+   },
+   success : function(data) {  
+
+   alert('successfully register');
+   window.location = "/login/";
+    },
+    error : function(request,error){
+   alert("Request: "+JSON.stringify(request));
+     }
+   });
+  }  
+
+    </script>
+</div>
+
+<!-- </body>
+</html> -->
+
+
+{% endblock %}

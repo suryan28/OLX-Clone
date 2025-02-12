@@ -1,0 +1,99 @@
+{% extends "olx.html" %}
+
+{% block content %}
+
+<div class="container wrapper">
+    <div class="row cart-head">
+        <div class="container">
+        <div class="row">
+            <p></p>
+        </div>
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item"><a href="/setting">Setting</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'user:subscription' %}">Subscription</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Subscription Details</li>
+    
+            </ol>
+          </nav>
+        <div class="row">
+            <p></p>
+        </div>
+        </div>
+    </div>    
+    
+    <div class="row cart-body">
+        <form class="form-horizontal" method="post" action="">
+            {% csrf_token %}
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
+            <!--REVIEW ORDER-->
+          
+        </div>
+        
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Review subscription <div class="pull-right"><small><a class="afix-1" href="{% url 'user:subscription' %}">change subsceription</a></small></div>
+                </div>
+                <div class="panel-body">
+                   
+            <div class="card" style="margin: 10px;">
+                
+                
+                <div class="card-body" style="background-color: white; padding: 10px;">
+                    <div class="card-title text-center">
+                        <h3>{{ subscription_detail.name }}</h3>
+                        <hr>
+                    </div>
+                <div class="row">
+                    <div class="col-md-6 ">
+                       <h4>Subscription charges</h4>
+                    </div>
+                   <div class="col-md-6 ">
+    
+                       <h4 class="pull-right">-{{ subscription_detail.price }}</h4>
+                    </div><hr>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 ">
+    
+                <h4>Number of adds</h4>
+            </div>
+            <div class="col-md-6 ">
+    
+                
+                <h4 class="pull-right">-{{ subscription_detail.ads_count }}</h4>
+            </div>
+              <br>
+                </div>
+                <hr>
+                <div class="cartd-footer text-center">
+               
+            </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <strong>Total Amount</strong>
+                    <div class="pull-right"><span>Rs</span><span>{{subscription_detail.price}}</span></div><hr>
+                </div>
+            </div>
+            
+           
+            <!--REVIEW ORDER END-->
+                </div>
+            </div>
+            <div class="text-center">
+            {{ form.render }}
+            </div>
+        </div>
+        
+        </form>
+    </div>
+    <div class="row cart-footer">
+
+    </div>
+</div>
+
+{% endblock %}

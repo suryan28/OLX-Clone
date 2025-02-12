@@ -1,0 +1,15 @@
+asgiref
+backports.zoneinfo
+certifi
+channels
+charset-normalizer
+Django
+django-cors-headers
+django-paypal
+idna
+Pillow
+pytz
+requests
+sqlparse
+upgrade-requirements
+urllib3

@@ -1,0 +1,27 @@
+{% extends "olx.html" %}
+{% block content %}
+<div class="container">
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Messages</li>
+    </ol>
+  </nav>
+
+  <div class="col-md-4 mb-3">
+    <div class="card">
+      <div class="card-body" style="background-color: white;">
+        <div class="d-flex flex-column align-items-center text-center">
+            <ul>
+                {% for obj in chat_room %}
+                <li><a href="/{{obj.seller.id}}/{{ obj.product_id.id }}/{{ obj.buyer.id }}"  >{{ obj.product_id.product_title}}</a></li>
+          
+                {% endfor %}
+              </ul>
+                  
+          </div>
+        </div>
+      </div>
+    </div>
+</div> 
+{% endblock %}

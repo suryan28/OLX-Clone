@@ -1,0 +1,30 @@
+{% extends "olx.html" %}
+
+{% block content %}
+<div class="container">
+<form method="post">
+    {% csrf_token %}
+     
+    
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+    <!-- <input type="text" id="product_title_id" class="form-control mb-4"name="product_title" value="{{products.product_title}}"><br>
+    <input type="text" id="price_id" class="form-control mb-4"name="product_price" value="{{products.product_price}}" ><br>
+    <textarea class="form-control mb-4" name="product_description" id="product_description_id" value="{{products.product_description}}" rows="3"></textarea><br>
+    <input type="text" id="product_location_id" class="form-control mb-4"name="product_location" value="{{products.product_location}}"><br>
+
+    <select class="form-control mb-4"name="category" id="id_category">
+        <option selected disabled>Select Category</option>
+       
+        {% for choice in form.category.field.queryset %}
+       
+        <option value=" {{ products.category }}"> {{ choice.sub_categories }}</option>
+        {% endfor %}
+    
+    </select><br>
+    <input type="file" id="image_id" class="form-control mb-4"name="image" value="{{products.image}}"><br>
+    <input type="submit" value="Update">
+</form> -->
+</div>
+
+{% endblock %}

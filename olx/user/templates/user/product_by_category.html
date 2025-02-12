@@ -1,0 +1,56 @@
+{% extends "olx.html" %}
+
+{% block content %}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+      <ol class="breadcrumb">
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">All Categories <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+                     
+          
+          {% for cat in categorylist %}
+          
+          <li><a href="{% url 'user:product_by_category' cat.id %}" value="{{cat.id}}">{{cat.sub_categories}}</a></li>
+          {% endfor %}
+          
+          
+                  
+    
+          </ul>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{products.category.sub_categories}}</li>
+
+      </ol>
+    </nav>
+    </div>
+    <div class="container-fluid">
+    <div class="row">
+
+   console.log({{products.category.sub_categories}})
+
+    {% for product in products %}
+    <div class="col-md-2">
+        <div class="mt-5">
+          <div class="card">
+              <div class="about-product text-left mt-2"><img src='/media/{{product.image}}' style="width: 100%; height:250px">
+                <div class="card-body" style="padding: 10px; ">
+                  <h3 class="card-title"><i style="font-size:24px" class="fa">&#xf156;</i>{{product.product_price}}</h3>
+                      <!-- <h3><i style="font-size:24px" class="fa">&#xf156;</i>{{product.product_price}}</h3> -->
+                      <h4 class="mt-0 text-black-50 card-text">{{product.product_title}}</h4>
+                      <a href="{% url 'user:detail_view' product.id %}" class="btn btn-primary">View</a>
+                  </div>
+              </div>
+              
+            </div>   
+        </div>
+        </div>
+{% endfor %}
+
+
+</div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,231 @@
+{% extends "olx.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/setting">Setting</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Subscription</li>
+
+        </ol>
+      </nav>
+
+
+{% if subscribed_user and expire %}
+
+<div class="panel panel-success">
+    <div class="panel-heading"><h4>Activ Plane-{{subscribed_user.package.subscription_name}}:{{subscribed_user.package}}</h4></div>
+    <div class="panel-body">
+
+       <h3></h3> 
+       <div class="card" style="margin: 10px;">
+                
+                
+        <div class="card-body" style="background-color: white; padding: 10px;">
+            <div class="card-title ">
+                <h3>Package Details</h3>
+                <hr>
+            </div>
+        <div class="row">
+            <div class="col-md-4 ">
+               <h4>Subscription charges</h4>
+            </div>
+           <div class="col-md-3 ">
+
+               <h4 class="pull-right">-{{subscribed_user.package.price }}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 ">
+
+        <h4>Number of adds</h4>
+    </div>
+    <div class="col-md-3 ">
+
+        
+        <h4 class="pull-right">-{{ subscribed_user.package.ads_count }}</h4>
+    </div>
+      <br>
+        </div>
+        <hr><br>
+        <div class="cartd-footer text-center">
+            <h3>Package Expire in {{expiry_in}}</h3>
+       
+    </div>
+        </div>
+    </div>
+                   
+       
+        
+    </div>
+</div>
+{% else %}
+    <!-- <div class="row">
+        {% for offer in subscription_monthly %}
+        <div class="col-md-4">
+        <div class="card" style="margin: 10px;">
+        
+        
+            <div class="card-body" style="background-color: white; padding: 10px;">
+                <div class="card-title text-center">
+                    <h3>{{ offer.name }}</h3>
+                    <hr>
+                </div>
+            <div class="row">
+                <div class="col-md-6 ">
+                   <h4>Subscription charges</h4>
+                </div>
+               <div class="col-md-6 ">
+
+                   <h4>-{{ offer.price }}</h4>
+                </div><hr>
+            </div>
+            <div class="row">
+                <div class="col-md-6 ">
+
+            <h4>Number of adds</h4>
+        </div>
+        <div class="col-md-6 ">
+
+            
+            <h4>-{{ offer.ads_count }}</h4>
+        </div>
+<br>
+            </div>
+            <hr>
+            <div class="cartd-footer text-center">
+            <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endfor %}
+    
+        </div> -->
+
+
+
+
+
+
+        <ul class="nav nav-pills nav-justified">
+            <li class="active"><a data-toggle="pill" href="#monthly">Monthly</a></li>
+            <li><a data-toggle="pill" href="#annual">Annual</a></li>
+            
+          </ul>
+ <hr>
+          <div class="tab-content">
+            <div id="monthly" class="tab-pane fade in active">
+              
+                {% for offer in subscription_monthly %}
+                <div class="col-md-4">
+                <div class="card" style="margin: 10px;">
+                
+                
+                    <div class="card-body" style="background-color: white; padding: 10px;">
+                        <div class="card-title text-center">
+                            <h3>{{ offer.name }}</h3>
+                            <hr>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                           <h4>Subscription charges</h4>
+                        </div>
+                       <div class="col-md-6 ">
+        
+                           <h4>-{{ offer.price }}</h4>
+                        </div><hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+        
+                    <h4>Number of adds</h4>
+                </div>
+                <div class="col-md-6 ">
+        
+                    
+                    <h4>-{{ offer.ads_count }}</h4>
+                </div>
+        <br>
+                    </div>
+                    <hr>
+                    <div class="cartd-footer text-center">
+                        {{ form.render }}
+                    <a href="{% url 'user:subscription_process' offer.id %}" class="btn btn-primary">Buy</a>
+                </div>
+                    </div>
+                </div>
+            </div>
+            
+            {% endfor %}
+
+
+
+
+
+            </div>
+            <div id="annual" class="tab-pane fade">
+              
+                {% for offer in subscription_annual %}
+                <div class="col-md-4">
+                <div class="card" style="margin: 10px;">
+                
+                
+                    <div class="card-body" style="background-color: white; padding: 10px;">
+                        <div class="card-title text-center">
+                            <h3>{{ offer.name }}</h3>
+                            <hr>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                           <h4>Subscription charges</h4>
+                        </div>
+                       <div class="col-md-6 ">
+        
+                           <h4>-{{ offer.price }}</h4>
+                        </div><hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+        
+                    <h4>Number of adds</h4>
+                </div>
+                <div class="col-md-6 ">
+        
+                    
+                    <h4>-{{ offer.ads_count }}</h4>
+                </div>
+        <br>
+                    </div>
+                    <hr>
+                    <div class="cartd-footer text-center">
+                        {{ form.render }}
+                    <a href="{% url 'user:subscription_process' offer.id %}" class="btn btn-primary">Buy</a>
+                </div>
+                    </div>
+                </div>
+            </div>
+            
+            {% endfor %}
+
+
+
+
+
+
+
+
+
+            </div>
+            
+          </div>
+    </div>
+</div>
+
+
+{% endif %}
+{% endblock %}
